@@ -1,0 +1,10 @@
+--- gtkwave-2.0.0pre5/src/config/Makefile.am.orig	2006-03-02 19:05:11.000000000 +0100
++++ gtkwave-2.0.0pre5/src/config/Makefile.am	2006-03-02 19:05:52.000000000 +0100
+@@ -1,6 +1,6 @@
+ ## Process this file with automake to produce Makefile.in
+ 
+-INCLUDES = @GTK_CFLAGS@ @XML_CFLAGS@ -I..
++INCLUDES = @GTK_CFLAGS@ @XML_CPPFLAGS@ -I..
+ 
+ noinst_LIBRARIES = libwaveconfig.a
+ 
