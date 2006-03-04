@@ -11,9 +11,9 @@ Patch0:		%{name}-xml.patch
 URL:		http://www.cs.manchester.ac.uk/apt/projects/tools/gtkwave/
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	libtool
 BuildRequires:	bzip2-devel
 BuildRequires:	gtk+-devel >= 1.2.0
+BuildRequires:	libtool
 BuildRequires:	libxml2-devel >= 2.6.11
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -32,7 +32,8 @@ The GTKWave jest przegl±drak± przebiegów elektronicznych.
 %{__aclocal}
 %{__automake}
 %{__autoconf}
-%configure
+%configure \
+	--disable-static
 %{__make}
 
 %install
@@ -43,7 +44,6 @@ install -d $RPM_BUILD_ROOT{%{_pixmapsdir},%{_desktopdir}}
 	DESTDIR=$RPM_BUILD_ROOT
 
 rm -rf $RPM_BUILD_ROOT%{_includedir}
-rm -rf $RPM_BUILD_ROOT%{_libdir}/gtkwave/*.a
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -52,6 +52,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc TODO README AUTHORS ChangeLog
 %attr(755,root,root) %{_bindir}/*
+%dir %{_libdir}/gtkwave
 %attr(755,root,root) %{_libdir}/gtkwave/*.so*
 # .la are required
 %{_libdir}/gtkwave/*.la
