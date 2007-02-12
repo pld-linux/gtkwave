@@ -1,5 +1,5 @@
 Summary:	The GTKWave - electronic waveform viewer
-Summary(pl):	The GTKWave - przegl±darka przebiegów elektronicznych
+Summary(pl.UTF-8):   The GTKWave - przeglÄ…darka przebiegÃ³w elektronicznych
 Name:		gtkwave
 Version:	2.0.0pre5
 Release:	1
@@ -20,8 +20,8 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 The GTKWave electronic waveform viewer.
 
-%description -l pl
-The GTKWave jest przegl±drak± przebiegów elektronicznych.
+%description -l pl.UTF-8
+The GTKWave jest przeglÄ…drakÄ… przebiegÃ³w elektronicznych.
 
 %prep
 %setup -q
