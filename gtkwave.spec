@@ -1,5 +1,5 @@
 Summary:	The GTKWave - electronic waveform viewer
-Summary(pl.UTF-8):   The GTKWave - przeglądarka przebiegów elektronicznych
+Summary(pl.UTF-8):	The GTKWave - przeglądarka przebiegów elektronicznych
 Name:		gtkwave
 Version:	2.0.0pre5
 Release:	1
