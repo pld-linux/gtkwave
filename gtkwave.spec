@@ -1,12 +1,12 @@
 Summary:	The GTKWave - electronic waveform viewer
 Summary(pl.UTF-8):	The GTKWave - przeglądarka przebiegów elektronicznych
 Name:		gtkwave
-Version:	3.3.40
+Version:	3.3.47
 Release:	1
 License:	GPL
 Group:		Applications/Printing
 Source0:	http://gtkwave.sourceforge.net/%{name}-%{version}.tar.gz
-# Source0-md5:	f7b4cd0d056084f6725173b7f939152c
+# Source0-md5:	fdb257ed42220a9a7526b70d1746054a
 URL:		http://gtkwave.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -62,7 +62,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc ANALOG_README.TXT CHANGELOG.TXT SYSTEMVERILOG_README.TXT
+%doc ANALOG_README.TXT SYSTEMVERILOG_README.TXT
 %attr(755,root,root) %{_bindir}/*
 %{_datadir}/%{name}
 %{_datadir}/mime/application/*.xml
