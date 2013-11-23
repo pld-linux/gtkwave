@@ -1,22 +1,26 @@
+# TODO: simarama, FsdbReader support?
 Summary:	The GTKWave - electronic waveform viewer
-Summary(pl.UTF-8):	The GTKWave - przeglądarka przebiegów elektronicznych
+Summary(pl.UTF-8):	GTKWave - przeglądarka przebiegów elektronicznych
 Name:		gtkwave
-Version:	3.3.47
+Version:	3.3.52
 Release:	1
-License:	GPL
+License:	GPL v2+
 Group:		Applications/Printing
 Source0:	http://gtkwave.sourceforge.net/%{name}-%{version}.tar.gz
-# Source0-md5:	fdb257ed42220a9a7526b70d1746054a
+# Source0-md5:	1a7b7fbfede6f1f91fe26845b3b36f48
 URL:		http://gtkwave.sourceforge.net/
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
 BuildRequires:	bzip2-devel
-BuildRequires:	gtk+2-devel
+BuildRequires:	gperf
+BuildRequires:	gtk+2-devel >= 2:2.2.0
 BuildRequires:	judy-devel
-BuildRequires:	libtool
-BuildRequires:	tcl-devel
-BuildRequires:	tk-devel
+BuildRequires:	libstdc++-devel
+BuildRequires:	pkgconfig
+BuildRequires:	tcl-devel >= 8.4
+BuildRequires:	tk-devel >= 8.4
 BuildRequires:	xz-devel
+BuildRequires:	zlib-devel
 Requires(post,postun):	shared-mime-info >= 0.14
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -24,19 +28,19 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 The GTKWave electronic waveform viewer.
 
 %description -l pl.UTF-8
-The GTKWave jest przeglądraką przebiegów elektronicznych.
+GTKWave jest przeglądraką przebiegów elektronicznych.
 
 %prep
 %setup -q
 
 %build
-%{__libtoolize}
 %{__aclocal} -I .
-%{__automake}
 %{__autoconf}
+%{__autoheader}
+%{__automake}
 %configure \
-	UPDATE_DESKTOP_DATABASE=/bin/true \
 	--enable-judy \
+	--disable-mime-update \
 	--with-tcl=/usr/lib \
 	--with-tk=/usr/lib
 
@@ -44,12 +48,13 @@ The GTKWave jest przeglądraką przebiegów elektronicznych.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_pixmapsdir},%{_desktopdir}}
+install -d $RPM_BUILD_ROOT%{_pixmapsdir}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-rm -rf $RPM_BUILD_ROOT%{_includedir}
+# non-themed icons belong to pixmapsdir
+%{__mv} $RPM_BUILD_ROOT%{_iconsdir}/*.png $RPM_BUILD_ROOT%{_pixmapsdir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -62,12 +67,45 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc ANALOG_README.TXT SYSTEMVERILOG_README.TXT
-%attr(755,root,root) %{_bindir}/*
+%doc ANALOG_README.TXT AUTHORS ChangeLog LICENSE.TXT MIT.TXT README SYSTEMVERILOG_README.TXT
+%attr(755,root,root) %{_bindir}/evcd2vcd
+%attr(755,root,root) %{_bindir}/fst2vcd
+%attr(755,root,root) %{_bindir}/fstminer
+%attr(755,root,root) %{_bindir}/ghwdump
+%attr(755,root,root) %{_bindir}/gtkwave
+%attr(755,root,root) %{_bindir}/lxt2miner
+%attr(755,root,root) %{_bindir}/lxt2vcd
+%attr(755,root,root) %{_bindir}/rtlbrowse
+%attr(755,root,root) %{_bindir}/shmidcat
+%attr(755,root,root) %{_bindir}/twinwave
+%attr(755,root,root) %{_bindir}/vcd2fst
+%attr(755,root,root) %{_bindir}/vcd2lxt
+%attr(755,root,root) %{_bindir}/vcd2lxt2
+%attr(755,root,root) %{_bindir}/vcd2vzt
+%attr(755,root,root) %{_bindir}/vermin
+%attr(755,root,root) %{_bindir}/vzt2vcd
+%attr(755,root,root) %{_bindir}/vztminer
 %{_datadir}/%{name}
-%{_datadir}/mime/application/*.xml
-%{_datadir}/mime/packages/*.xml
+%{_datadir}/mime/packages/x-gtkwave-extension-*.xml
 %{_desktopdir}/%{name}.desktop
-%{_iconsdir}/gnome/*/*/*.png
-%{_iconsdir}/*.png
-%{_mandir}/*/*
+%{_iconsdir}/gnome/*x*/mimetypes/gnome-mime-application-vnd.gtkwave-*.png
+%{_iconsdir}/gnome/*x*/mimetypes/gtkwave.png
+%{_pixmapsdir}/gtkwave*_256x256x32.png
+%{_mandir}/man1/evcd2vcd.1*
+%{_mandir}/man1/fst2vcd.1*
+%{_mandir}/man1/fstminer.1*
+%{_mandir}/man1/ghwdump.1*
+%{_mandir}/man1/gtkwave.1*
+%{_mandir}/man1/lxt2miner.1*
+%{_mandir}/man1/lxt2vcd.1*
+%{_mandir}/man1/rtlbrowse.1*
+%{_mandir}/man1/shmidcat.1*
+%{_mandir}/man1/twinwave.1*
+%{_mandir}/man1/vcd2fst.1*
+%{_mandir}/man1/vcd2lxt.1*
+%{_mandir}/man1/vcd2lxt2.1*
+%{_mandir}/man1/vcd2vzt.1*
+%{_mandir}/man1/vermin.1*
+%{_mandir}/man1/vzt2vcd.1*
+%{_mandir}/man1/vztminer.1*
+%{_mandir}/man5/gtkwaverc.5*
