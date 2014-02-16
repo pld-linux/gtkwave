@@ -1,14 +1,19 @@
-# TODO: simarama, FsdbReader support?
+# TODO: simarama, FsdbReader support? (BR proprietary libs?)
+#
+# Conditional build:
+%bcond_without	gconf	# GConf usage for preferences
+#
 Summary:	The GTKWave - electronic waveform viewer
 Summary(pl.UTF-8):	GTKWave - przeglądarka przebiegów elektronicznych
 Name:		gtkwave
-Version:	3.3.52
+Version:	3.3.57
 Release:	1
 License:	GPL v2+
 Group:		Applications/Printing
 Source0:	http://gtkwave.sourceforge.net/%{name}-%{version}.tar.gz
-# Source0-md5:	1a7b7fbfede6f1f91fe26845b3b36f48
+# Source0-md5:	48b512df622302dcc39f9f1dd109aa70
 URL:		http://gtkwave.sourceforge.net/
+%{?with_gconf:BuildRequires:	GConf2-devel >= 2.0}
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
 BuildRequires:	bzip2-devel
@@ -41,6 +46,7 @@ GTKWave jest przeglądraką przebiegów elektronicznych.
 %configure \
 	--enable-judy \
 	--disable-mime-update \
+	%{?with_gconf:--with-gconf} \
 	--with-tcl=/usr/lib \
 	--with-tk=/usr/lib
 
@@ -67,7 +73,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc ANALOG_README.TXT AUTHORS ChangeLog LICENSE.TXT MIT.TXT README SYSTEMVERILOG_README.TXT
+%doc AUTHORS ChangeLog LICENSE.TXT README
 %attr(755,root,root) %{_bindir}/evcd2vcd
 %attr(755,root,root) %{_bindir}/fst2vcd
 %attr(755,root,root) %{_bindir}/fstminer
