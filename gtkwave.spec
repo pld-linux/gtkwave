@@ -6,12 +6,12 @@
 Summary:	The GTKWave - electronic waveform viewer
 Summary(pl.UTF-8):	GTKWave - przeglądarka przebiegów elektronicznych
 Name:		gtkwave
-Version:	3.3.60
+Version:	3.3.61
 Release:	1
 License:	GPL v2+
 Group:		Applications/Printing
 Source0:	http://gtkwave.sourceforge.net/%{name}-%{version}.tar.gz
-# Source0-md5:	c6cb20aeb0f7c1ebc2e84403111cb8e1
+# Source0-md5:	a3fbe3a87caf4cf59711617ed0a17d81
 URL:		http://gtkwave.sourceforge.net/
 %{?with_gconf:BuildRequires:	GConf2-devel >= 2.0}
 BuildRequires:	autoconf >= 2.59
