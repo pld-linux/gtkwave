@@ -1,26 +1,27 @@
 # TODO: simarama, FsdbReader support? (BR proprietary libs?)
 #
 # Conditional build:
-%bcond_without	gconf	# GConf usage for preferences
+%bcond_with	gconf	# GConf usage for preferences
 #
 Summary:	The GTKWave - electronic waveform viewer
 Summary(pl.UTF-8):	GTKWave - przeglądarka przebiegów elektronicznych
 Name:		gtkwave
-Version:	3.3.86
+Version:	3.3.123
 Release:	1
 License:	GPL v2+
 Group:		Applications/Printing
-Source0:	http://gtkwave.sourceforge.net/%{name}-%{version}.tar.gz
-# Source0-md5:	6319a203b3aa3f5aad35e0a5a3e85fe6
-URL:		http://gtkwave.sourceforge.net/
+Source0:	https://gtkwave.sourceforge.net/%{name}-gtk3-%{version}.tar.gz
+# Source0-md5:	123ed471a5bd9d6f3af43d5f850f0f6d
+URL:		https://gtkwave.sourceforge.net/
 %{?with_gconf:BuildRequires:	GConf2-devel >= 2.0}
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
 BuildRequires:	bzip2-devel
 BuildRequires:	gperf
-BuildRequires:	gtk+2-devel >= 2:2.2.0
+BuildRequires:	gtk+3-devel >= 3.0.0
 BuildRequires:	judy-devel
 BuildRequires:	libstdc++-devel
+BuildRequires:	libtirpc-devel
 BuildRequires:	pkgconfig
 BuildRequires:	tcl-devel >= 8.4
 BuildRequires:	tk-devel >= 8.4
@@ -36,7 +37,7 @@ The GTKWave electronic waveform viewer.
 GTKWave jest przeglądraką przebiegów elektronicznych.
 
 %prep
-%setup -q
+%setup -q -n %{name}-gtk3-%{version}
 
 %build
 %{__aclocal} -I .
@@ -44,10 +45,12 @@ GTKWave jest przeglądraką przebiegów elektronicznych.
 %{__autoheader}
 %{__automake}
 %configure \
+	--enable-gtk3 \
 	--enable-judy \
 	--disable-mime-update \
-	%{?with_gconf:--with-gconf} \
+	--with-gconf%{!?with_gconf:=no} \
 	--with-tcl=/usr/lib \
+	--with-tirpc \
 	--with-tk=/usr/lib
 
 %{__make}
@@ -73,11 +76,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog LICENSE.TXT README
+%doc AUTHORS ChangeLog LICENSE.TXT README.md
 %attr(755,root,root) %{_bindir}/evcd2vcd
 %attr(755,root,root) %{_bindir}/fst2vcd
 %attr(755,root,root) %{_bindir}/fstminer
-%attr(755,root,root) %{_bindir}/ghwdump
 %attr(755,root,root) %{_bindir}/gtkwave
 %attr(755,root,root) %{_bindir}/lxt2miner
 %attr(755,root,root) %{_bindir}/lxt2vcd
@@ -88,12 +90,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/vcd2lxt
 %attr(755,root,root) %{_bindir}/vcd2lxt2
 %attr(755,root,root) %{_bindir}/vcd2vzt
-%attr(755,root,root) %{_bindir}/vermin
 %attr(755,root,root) %{_bindir}/vzt2vcd
 %attr(755,root,root) %{_bindir}/vztminer
-%{_datadir}/%{name}
+%attr(755,root,root) %{_bindir}/xml2stems
+%{_datadir}/gtkwave-gtk3
 %{_datadir}/mime/packages/x-gtkwave-extension-*.xml
-%{_desktopdir}/%{name}.desktop
+%{_desktopdir}/gtkwave.desktop
 %{_iconsdir}/gnome/*x*/mimetypes/gnome-mime-application-vnd.gtkwave-*.png
 %{_iconsdir}/gnome/*x*/mimetypes/gtkwave.png
 %{_iconsdir}/hicolor/scalable/apps/gtkwave.svg
@@ -101,7 +103,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/evcd2vcd.1*
 %{_mandir}/man1/fst2vcd.1*
 %{_mandir}/man1/fstminer.1*
-%{_mandir}/man1/ghwdump.1*
 %{_mandir}/man1/gtkwave.1*
 %{_mandir}/man1/lxt2miner.1*
 %{_mandir}/man1/lxt2vcd.1*
@@ -112,7 +113,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/vcd2lxt.1*
 %{_mandir}/man1/vcd2lxt2.1*
 %{_mandir}/man1/vcd2vzt.1*
-%{_mandir}/man1/vermin.1*
 %{_mandir}/man1/vzt2vcd.1*
 %{_mandir}/man1/vztminer.1*
+%{_mandir}/man1/xml2stems.1*
 %{_mandir}/man5/gtkwaverc.5*
